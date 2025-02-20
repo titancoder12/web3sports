@@ -1,3 +1,6 @@
+Forked starter code from:
+https://github.com/eugenelin89/django_rest_api 
+
 Django Testing:
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Testing#locallibrary_tests
 
