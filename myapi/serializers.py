@@ -7,10 +7,16 @@
 # https://www.django-rest-framework.org/api-guide/serializers/
 from rest_framework import serializers
 from mybusiness.models import *
+from web3sports.models import *
 
 # Meta Class: 
 # https://www.youtube.com/watch?v=NAQEj-c2CI8
 # https://stackoverflow.com/questions/60500597/what-is-the-purpose-of-the-class-meta-in-django
+
+class PlayerSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Player
+        fields = ['id', 'name', 'age', 'team']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     # corresponds to related_name in MyUser model.

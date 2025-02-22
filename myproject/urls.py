@@ -70,6 +70,7 @@ router.register(r'editbusiness', views.EditBusinessViewSet, basename='editbusine
 router.register(r'notification', views.NotificationViewSet, basename='notification')
 router.register(r'usernotification', views.UserNotificationViewSet, basename='usernotification')
 router.register(r'businessdeclined', views.BusinessDeclinedViewSet, basename='businessdeclined')
+router.register(r'player', views.PlayerViewSet, basename='player')
 
 urlpatterns = [
     path('', include("users.urls")),

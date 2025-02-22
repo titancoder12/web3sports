@@ -13,6 +13,7 @@ from myapi.permissions import IsOwnerOrReadOnly, IsOwnerOrCreator
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 import json
 import datetime
+from web3sports.models import * # Web3Sports Modells
 
 # For File Upload
 from rest_framework.views import APIView
@@ -23,6 +24,10 @@ from datetime import datetime, timedelta
 
 # Create your views here.
 
+class PlayerViewSet(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class MyBusinessView(viewsets.ModelViewSet):
 
