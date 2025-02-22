@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'corsheaders', # for REST API
     'rest_framework',# for REST API
     'rest_framework.authtoken', # for Token Authentication
-    'myapi' # for REST API
+    'myapi', # for REST API
+    'web3sports' 
 ]
 
 MIDDLEWARE = [
