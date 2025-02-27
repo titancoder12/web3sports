@@ -1,0 +1,150 @@
+{
+  "game_id": "2025_02_25_00001",
+  "teams": {
+    "home": {
+      "team": {
+        "team_id": "team001",
+        "name": "Spain",
+        "players": [
+          {
+            "player_id": "player123",
+            "name": "John Doe",
+            "number": 1,
+            "primary_position": "pitcher"
+          },
+          {
+            "player_id": "player456",
+            "name": "Jane Doe",
+            "number": 1,
+            "primary_position": "catcher"
+          },
+          {
+            "player_id": "player789",
+            "name": "Jim Doe",
+            "number": 1,
+            "primary_position": "first_base"
+          },
+          {
+            "player_id": "player9876",
+            "name": "Jill Doe",
+            "number": 1,
+            "primary_position": "second_base"
+          },
+          {
+            "player_id": "player9876",
+            "name": "Jill Doe",
+            "number": 1,
+            "primary_position": "second_base"
+          }
+        ]
+      },
+      "lineup": [
+        {
+          "player_id": "player123",
+          "position": "pitcher"
+        },
+        {
+          "player_id": "player456",
+          "position": "catcher"
+        },
+        {
+          "player_id": "player789",
+          "position": "first_base"
+        },
+        {
+          "player_id": "player9876",
+          "position": "second_base"
+        }
+      ],
+      "starting_pitcher": "player123"
+    },
+    "away": {
+      "team": {
+        "team_id": "team002",
+        "name": "Taiwan",
+        "players": [
+          {
+            "player_id": "player123",
+            "name": "John Doe",
+            "number": 1,
+            "primary_position": "pitcher"
+          },
+          {
+            "player_id": "player456",
+            "name": "Jane Doe",
+            "number": 1,
+            "primary_position": "catcher"
+          },
+          {
+            "player_id": "player789",
+            "name": "Jim Doe",
+            "number": 1,
+            "primary_position": "first_base"
+          },
+          {
+            "player_id": "player9876",
+            "name": "Jill Doe",
+            "number": 1,
+            "primary_position": "second_base"
+          }
+        ]
+      },
+      "lineup": [
+        {
+          "player_id": "player123",
+          "position": "pitcher"
+        },
+        {
+          "player_id": "player456",
+          "position": "catcher"
+        },
+        {
+          "player_id": "player789",
+          "position": "first_base"
+        },
+        {
+          "player_id": "player9876",
+          "position": "second_base"
+        }
+      ],
+      "starting_pitcher": "player123"
+    }
+  },
+
+  "events": [
+    {
+      "event_id": "event001",
+      "event_type": "pitch",
+      "pitching_details": {
+        "pitcher_id": "player123",
+        "hitter_id": "player456",
+        "is_strike": false,
+        "strike_count": 0,
+        "ball_count": 1,
+        "pitch_type": "fastball",
+        "pitch_speed": 92,
+        "pitch_location": "high and outside",
+        "pitch_result": "passed_ball"
+      },
+      "inning": 1,
+      "team": "home",
+      "player": "player123"
+    }
+  ],
+  "states": [
+    {
+      "state_id": "",
+      "event_id": "",
+      "inning": 3,
+      "outs": 2,
+      "bases": {
+        "first_base": null,
+        "second_base": "player9876",
+        "third_base": "player789"
+      },
+      "current_batter": "player456",
+      "pitch_count": 3,
+      "score": { "home": 3, "away": 2 }
+    }
+  ]
+}
