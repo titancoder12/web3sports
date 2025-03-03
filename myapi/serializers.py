@@ -16,7 +16,14 @@ from web3sports.models import *
 class PlayerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Player
-        fields = ['id', 'first_name','last_name', 'birth_date', 'birth_country', 'birth_city', 'number', 'batting_throwing', 'height_weight', 'primary_position']
+        fields = ['id', 'first_name','last_name', 'birth_date', 'birth_country', 'birth_city', 'number', 'batting_throwing', 'height_weight', 'primary_position', 'created_date']
+
+
+class TeamSerializer(serializers.HyperlinkedModelSerializer):
+    roster = PlayerSerializer(many=True, read_only=True)
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'country', 'province_state', 'city', 'roster', 'league', 'is_approved', 'created_date']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     # corresponds to related_name in MyUser model.

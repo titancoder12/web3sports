@@ -23,6 +23,10 @@ from rest_framework.decorators import action
 from datetime import datetime, timedelta
 
 # Create your views here.
+class TeamViewSet(viewsets.ModelViewSet):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
