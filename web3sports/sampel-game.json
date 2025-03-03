@@ -211,6 +211,7 @@
             "player_id": "player017",
             "first_name": "Shao-Hung",
             "last_name": "Chiang",
+            "number": 63,
             "B/T": "R/R",
             "H/W": "5-11, 220",
             "primary_position": "catcher"
@@ -250,6 +251,114 @@
             "B/T": "L/R",
             "H/W": "5-9, 180",
             "primary_position": "infield"
+          },
+          {
+            "id": 22,
+            "first_name": "Ji-Hong",
+            "last_name": "Liu",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 46,
+            "batting_throwing": "R/R",
+            "height_weight": "5-9, 194",
+            "primary_position": "infield"
+          },
+          {
+            "id": 23,
+            "first_name": "Tzu-Yu",
+            "last_name": "Tseng",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 8,
+            "batting_throwing": "R/R",
+            "height_weight": "5-8, 163",
+            "primary_position": "infield"
+          },
+          {
+            "id": 24,
+            "first_name": "Po-Hsuan",
+            "last_name": "Wang",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 6,
+            "batting_throwing": "L/R",
+            "height_weight": "6-0, 176",
+            "primary_position": "infield"
+          },
+          {
+            "id": 25,
+            "first_name": "Nien-Ting",
+            "last_name": "Wu",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 39,
+            "batting_throwing": "L/R",
+            "height_weight": "5-10, 165",
+            "primary_position": "infield"
+          },
+          {
+            "id": 26,
+            "first_name": "Chieh-Hsien",
+            "last_name": "Chen",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 24,
+            "batting_throwing": "L/R",
+            "height_weight": "5-8, 172",
+            "primary_position": "outfield"
+          },
+          {
+            "id": 27,
+            "first_name": "Tzu-Hao",
+            "last_name": "Chen",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 1,
+            "batting_throwing": "L/L",
+            "height_weight": "5-5, 141",
+            "primary_position": "outfield"
+          },
+          {
+            "id": 28,
+            "first_name": "Wun-Jie",
+            "last_name": "Chen",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 3,
+            "batting_throwing": "L/R",
+            "height_weight": "6-1, 168",
+            "primary_position": "outfield"
+          },
+          {
+            "id": 29,
+            "first_name": "Chia-Wei",
+            "last_name": "Lin",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 20,
+            "batting_throwing": "L/R",
+            "height_weight": "6-0, 185",
+            "primary_position": "outfield"
+          },
+          {
+            "id": 30,
+            "first_name": "Cheng-Jui",
+            "last_name": "Sung",
+            "birth_date": null,
+            "birth_country": "Taiwan",
+            "birth_city": "",
+            "number": 88,
+            "batting_throwing": "R/R",
+            "height_weight": "6-0, 185",
+            "primary_position": "outfield"
           }
         ]
       },
