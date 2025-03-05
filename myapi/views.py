@@ -87,6 +87,32 @@ class UpdateTeamViewSet(viewsets.ViewSet):
         team_data = TeamSerializer(team, context={'request': request}).data
         return Response({'errors': [], 'team': team_data}, status=status.HTTP_200_OK)
 
+class UpdateGameViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication,
+                              SessionAuthentication, BasicAuthentication]
+    
+    @action(detail=False, methods=['put'])
+    def add_team(self, request, pk=None):
+        print(request.body)
+        data = json.loads(request.body)
+        game_id = data.get('game_id')
+        team_id = data.get('team_id')
+        team = Team.objects.get(id=team_id)
+        game = Game.objects.get(id=game_id)
+        if not game.home_team:
+            game.home_team = team
+        elif not game.away_team:
+            game.away_team = team
+        else:
+            return Response({'errors': ['Both teams are already assigned']}, status=status.HTTP_400_BAD_REQUEST)
+        game.save()
+        game_data = GameSerializer(game, context={'request': request}).data
+        return Response({'errors': [], 'game': game_data}, status=status.HTTP_200_OK)
+
+
+
+####################################################################3
 class MyBusinessView(viewsets.ModelViewSet):
 
     # queryset = MyBusiness.objects.filter(created_by = 1) #MyBusiness.objects.all()
