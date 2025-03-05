@@ -77,7 +77,7 @@ class UpdateTeamViewSet(viewsets.ViewSet):
         if existing_players.exists():
             return Response({'errors': ['One or more players are already on the team']}, status=status.HTTP_400_BAD_REQUEST)
 
-        team.roster.add(*players)
+        team.roster.add(*players) # unpacking players
         team.save()
         team_data = TeamSerializer(team, context={'request': request}).data
         return Response({'errors': [], 'team': team_data}, status=status.HTTP_200_OK)
