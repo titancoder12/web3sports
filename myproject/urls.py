@@ -72,6 +72,7 @@ router.register(r'usernotification', views.UserNotificationViewSet, basename='us
 router.register(r'businessdeclined', views.BusinessDeclinedViewSet, basename='businessdeclined')
 router.register(r'player', views.PlayerViewSet, basename='player')
 router.register(r'team', views.TeamViewSet, basename='team')
+router.register(r'updateteam', views.UpdateTeamViewSet, basename='updateteam')
 
 urlpatterns = [
     path('', include("users.urls")),

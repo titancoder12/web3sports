@@ -28,6 +28,15 @@ class TeamViewSet(viewsets.ModelViewSet):
     serializer_class = TeamSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def perform_create(self, serializer):
+        """Modify data before saving the Team object"""
+        roster_ids = self.request.data.get("roster_ids", [])  # Extract player IDs from request
+        team = serializer.save()  # Save the Team instance
+
+        if roster_ids:
+            players = Player.objects.filter(id__in=roster_ids)
+            team.roster.set(players)  # Assign players to the team
+
 class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
@@ -385,6 +394,22 @@ class FileViewSet(viewsets.ModelViewSet):
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Add players to a team
+class UpdateTeamViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication,
+                              SessionAuthentication, BasicAuthentication]
+    
+    def list(self, request):
+        return Response()
+    
+    # SUBMIT FOR REVIEW
+    # curl -X PUT -H 'Authorization: Token 9af7ed53fa7a0356998896d8224e67e65c8650a3' -d '{"insuranceapplication":{"planned_premium":"$1002","plan_type":2,"provider":2,"face_amount":"$1000000111","id":59},"contact":{"street_address":"12345 ABCDEFG St.","unit":"123","province_state_id":3,"country_id":2,"phone_id":1,"address_id":1}}'  HTTP://127.0.0.1:8000/api/editbusiness/edit_business/
+    @action(detail=False, methods=['put'])
+    def add_player(self, request, pk=None):
+        print(request.body)
+        data = json.loads(request.body)
+        return Response({'errors': [], 'data': data})  # must return array
 
 class EditBusinessViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
@@ -393,7 +418,7 @@ class EditBusinessViewSet(viewsets.ViewSet):
 
     def list(self, request):
         return Response()
-
+    
     def authorized_for_write(self, business_id):
         my_business = MyBusiness.objects.get(id=business_id)
 
