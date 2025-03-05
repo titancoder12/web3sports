@@ -86,7 +86,8 @@ class UpdateTeamViewSet(viewsets.ViewSet):
         team.save()
         team_data = TeamSerializer(team, context={'request': request}).data
         return Response({'errors': [], 'team': team_data}, status=status.HTTP_200_OK)
-
+    
+# curl -X PUT -H 'Authorization: Token 0dc7daba9613837a9548e7f1e561d87b43ebab52' -d '{"game_id:3","team_id":1, "is_home":true}'  HTTP://127.0.0.1:8000/api/updategame/add_team/
 class UpdateGameViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
