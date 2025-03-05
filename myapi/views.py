@@ -404,12 +404,22 @@ class UpdateTeamViewSet(viewsets.ViewSet):
         return Response()
     
     # SUBMIT FOR REVIEW
-    # curl -X PUT -H 'Authorization: Token 9af7ed53fa7a0356998896d8224e67e65c8650a3' -d '{"insuranceapplication":{"planned_premium":"$1002","plan_type":2,"provider":2,"face_amount":"$1000000111","id":59},"contact":{"street_address":"12345 ABCDEFG St.","unit":"123","province_state_id":3,"country_id":2,"phone_id":1,"address_id":1}}'  HTTP://127.0.0.1:8000/api/editbusiness/edit_business/
+    # curl -X PUT -H 'Authorization: Token 0dc7daba9613837a9548e7f1e561d87b43ebab52' -d '{"team_id":2, "player_id": 1}'  HTTP://127.0.0.1:8000/api/updateteam/add_player/
     @action(detail=False, methods=['put'])
     def add_player(self, request, pk=None):
         print(request.body)
         data = json.loads(request.body)
-        return Response({'errors': [], 'data': data})  # must return array
+        team_id = data.get('team_id')
+        player_id = data.get('player_id')
+        team = Team.objects.get(id=team_id)
+        player = Player.objects.get(id=player_id)
+        # make sure player is not already on the team
+        if player in team.roster.all():
+            return Response({'errors': ['Player already on the team']})
+        team.roster.add(player)
+        team.save()
+        team_data = TeamSerializer(team).data
+        return Response(team_data)
 
 class EditBusinessViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
