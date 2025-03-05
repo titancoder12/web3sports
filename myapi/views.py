@@ -403,23 +403,36 @@ class UpdateTeamViewSet(viewsets.ViewSet):
     def list(self, request):
         return Response()
     
-    # SUBMIT FOR REVIEW
-    # curl -X PUT -H 'Authorization: Token 0dc7daba9613837a9548e7f1e561d87b43ebab52' -d '{"team_id":2, "player_id": 1}'  HTTP://127.0.0.1:8000/api/updateteam/add_player/
+    # Add players to a team
+    # curl -X PUT -H 'Authorization: Token 0dc7daba9613837a9548e7f1e561d87b43ebab52' -d '{"team_id":2, "player_ids": [10, 11, 12]}'  HTTP://127.0.0.1:8000/api/updateteam/add_players/
     @action(detail=False, methods=['put'])
-    def add_player(self, request, pk=None):
+    def add_players(self, request, pk=None):
         print(request.body)
         data = json.loads(request.body)
         team_id = data.get('team_id')
-        player_id = data.get('player_id')
-        team = Team.objects.get(id=team_id)
-        player = Player.objects.get(id=player_id)
-        # make sure player is not already on the team
-        if player in team.roster.all():
-            return Response({'errors': ['Player already on the team']})
-        team.roster.add(player)
+        player_ids = data.get('player_ids')
+
+        if not team_id or not player_ids:
+            return Response({'errors': ['team_id and player_ids are required']}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            team = Team.objects.get(id=team_id)
+        except Team.DoesNotExist:
+            return Response({'errors': ['Team not found']}, status=status.HTTP_404_NOT_FOUND)
+
+        players = Player.objects.filter(id__in=player_ids)
+        if not players.exists():
+            return Response({'errors': ['No players found with the provided IDs']}, status=status.HTTP_404_NOT_FOUND)
+
+        # make sure players are not already on the team
+        existing_players = team.roster.filter(id__in=player_ids)
+        if existing_players.exists():
+            return Response({'errors': ['One or more players are already on the team']}, status=status.HTTP_400_BAD_REQUEST)
+
+        team.roster.add(*players)
         team.save()
-        team_data = TeamSerializer(team).data
-        return Response(team_data)
+        team_data = TeamSerializer(team, context={'request': request}).data
+        return Response({'errors': [], 'team': team_data}, status=status.HTTP_200_OK)
 
 class EditBusinessViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
