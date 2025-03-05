@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 
 # Create your models here.
 
@@ -43,3 +44,58 @@ class Team(models.Model):
 
 
 
+class Game(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField(blank=True)
+    time = models.TimeField(blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="home_games", blank=True, null=True)
+    away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="away_games", blank=True, null=True)
+    league = models.ForeignKey(League, on_delete=models.SET_NULL, related_name="games", null=True, blank=True)
+    is_verified = models.BooleanField(default=False)  # True if manually verified
+
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+class GameLineupEntry(models.Model):
+    POSITION_CHOICES = [
+        ('P', 'Pitcher'),
+        ('C', 'Catcher'),
+        ('1B', 'First Base'),
+        ('2B', 'Second Base'),
+        ('3B', 'Third Base'),
+        ('SS', 'Shortstop'),
+        ('LF', 'Left Field'),
+        ('CF', 'Center Field'),
+        ('RF', 'Right Field'),
+        ('DH', 'Designated Hitter'),
+    ]
+
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="lineup_entries")
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    position = models.CharField(max_length=20, choices=POSITION_CHOICES)
+
+    # Ensures lineup order
+    lineup_order = models.PositiveIntegerField()
+
+    # Differentiates home & away team
+    home_team = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="home_lineup_entries", null=True, blank=True)
+    away_team = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="away_lineup_entries", null=True, blank=True)
+
+    class Meta:
+        unique_together = ('game', 'player', 'home_team', 'away_team')  # Prevents duplicate entries
+        ordering = ['lineup_order']  # Ensures ordered retrieval
+
+    def clean(self):
+        if self.home_team and self.away_team:
+            raise ValidationError("A lineup entry cannot belong to both home and away teams.")
+        if not self.home_team and not self.away_team:
+            raise ValidationError("A lineup entry must belong to either the home or away team.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        team_type = "Home" if self.home_team else "Away"
+        return f"{self.player.name} - {self.position} ({team_type}, Order {self.lineup_order}) in {self.game.name}"

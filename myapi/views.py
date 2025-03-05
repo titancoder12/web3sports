@@ -42,6 +42,11 @@ class PlayerViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 # Add players to a team
 class UpdateTeamViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]

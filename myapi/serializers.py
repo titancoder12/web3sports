@@ -25,6 +25,24 @@ class TeamSerializer(serializers.HyperlinkedModelSerializer):
         model = Team
         fields = ['id', 'name', 'country', 'province_state', 'city', 'roster', 'league', 'is_approved', 'created_date']
 
+class GameLineupEntrySerializer(serializers.ModelSerializer):
+    player = PlayerSerializer()  # Includes full player details
+
+    class Meta:
+        model = GameLineupEntry
+        fields = ['player', 'position', 'lineup_order']
+
+class GameSerializer(serializers.ModelSerializer):
+    home_lineup = GameLineupEntrySerializer(many=True, read_only=True)
+    away_lineup = GameLineupEntrySerializer(many=True, read_only=True)
+    home_team = TeamSerializer(read_only=True)
+    away_team = TeamSerializer(read_only=True)
+
+    class Meta:
+        model = Game
+        fields = ['id', 'name','date','time','location','home_team', 'home_lineup', 'away_team','away_lineup']
+
+##########################################################################################
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     # corresponds to related_name in MyUser model.
     #created_businesses = serializers.PrimaryKeyRelatedField(many=True,queryset=MyBusiness.objects.all())

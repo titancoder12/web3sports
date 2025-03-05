@@ -73,6 +73,7 @@ router.register(r'businessdeclined', views.BusinessDeclinedViewSet, basename='bu
 router.register(r'player', views.PlayerViewSet, basename='player')
 router.register(r'team', views.TeamViewSet, basename='team')
 router.register(r'updateteam', views.UpdateTeamViewSet, basename='updateteam')
+router.register(r'game', views.GameViewSet, basename='game')
 
 urlpatterns = [
     path('', include("users.urls")),
