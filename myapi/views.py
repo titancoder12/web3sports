@@ -89,8 +89,7 @@ class UpdateTeamViewSet(viewsets.ViewSet):
 
 class UpdateGameViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = [TokenAuthentication,
-                              SessionAuthentication, BasicAuthentication]
+    authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     
     @action(detail=False, methods=['put'])
     def add_team(self, request, pk=None):
@@ -98,14 +97,28 @@ class UpdateGameViewSet(viewsets.ViewSet):
         data = json.loads(request.body)
         game_id = data.get('game_id')
         team_id = data.get('team_id')
-        team = Team.objects.get(id=team_id)
-        game = Game.objects.get(id=game_id)
-        if not game.home_team:
+        is_home = data.get('is_home')
+
+        if not game_id or not team_id or is_home is None:
+            return Response({'errors': ['game_id, team_id, and is_home are required']}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            team = Team.objects.get(id=team_id)
+        except Team.DoesNotExist:
+            return Response({'errors': ['Team not found']}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            game = Game.objects.get(id=game_id)
+        except Game.DoesNotExist:
+            return Response({'errors': ['Game not found']}, status=status.HTTP_404_NOT_FOUND)
+
+        if is_home and not game.home_team:
             game.home_team = team
-        elif not game.away_team:
+        elif not is_home and not game.away_team:
             game.away_team = team
         else:
             return Response({'errors': ['Both teams are already assigned']}, status=status.HTTP_400_BAD_REQUEST)
+
         game.save()
         game_data = GameSerializer(game, context={'request': request}).data
         return Response({'errors': [], 'game': game_data}, status=status.HTTP_200_OK)
