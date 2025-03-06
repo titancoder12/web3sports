@@ -74,6 +74,7 @@ router.register(r'player', views.PlayerViewSet, basename='player')
 router.register(r'team', views.TeamViewSet, basename='team')
 router.register(r'updateteam', views.UpdateTeamViewSet, basename='updateteam')
 router.register(r'game', views.GameViewSet, basename='game')
+router.register(r'updategame', views.UpdateGameViewSet, basename='updategame')
 
 urlpatterns = [
     path('', include("users.urls")),
